@@ -18,7 +18,7 @@ let fadeTime = nextWordSpan * 30;
 export default {
     DEBUG_MODE: debugMode,
     FILE_NAME: fileName,
-    WORD_FILE_PATH: `../data/${fileName}.txt`,
+    WORD_FILE_PATH: `../data/${fileName}.json`,
     SAVE_FILE_PATH: `../data/${fileName}_save.json`,
     FADE_TIME: fadeTime,
     NEXT_WORD_SPAN: nextWordSpan,

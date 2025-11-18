@@ -22,25 +22,25 @@ class WordMgr {
         this.saveWords = {};
         this.currlist = new Set();
 
-        fetch(filePath)
-            .then(response => response.text())
-            .then(data => {
-                this.words = data.split('\n').map(line => {
-                    let parts = line.split('\t');
-                    if (parts.length < 3) {
-                        console.warn(`Skipping malformed line: ${line}`);
-                        return null;
-                    }
-                    let word = parts[0].trim();
-                    let hinagara = parts[1].trim();
-                    let meaning = parts.slice(2).join('\t').trim();
+        /*
+            json示例：
+            [ {
+                "word": "風車",
+                "meaning": "1.  windmill; 2.  pinwheel",
+                "furigana": "かざぐるま",
+                "romaji": "kazaguruma",
+                "level": 1
+            }, ...]
 
-                    return new Word(word, hinagara, meaning);
+        */
+
+        fetch(filePath)
+            .then(response => response.json())
+            .then(data => {
+                this.words = data.map(item => {
+                    return new Word(item.word, item.furigana, item.meaning);
                 });
                 console.log('Word data loaded successfully:', this.words.length, 'words found');
-            })
-            .catch(error => {
-                console.error('Failed to load word file:', error);
             });
         fetch(savepath)
             .then(response => response.json())
